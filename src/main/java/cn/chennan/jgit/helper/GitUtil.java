@@ -42,10 +42,10 @@ public class GitUtil implements InitializingBean, DisposableBean {
     public static void commit(String prefixUrl, String name, String comment) throws Exception {
         File file = new File(repo.getDirectory().getParentFile(), name);
         if(!file.exists()){
-            throw new Exception("file not exist, add fault");
+            throw new Exception("file not exist, add fault, "+ file.getPath());
         }
 
-        git.add().addFilepattern(prefixUrl + name).call();
+        git.add().addFilepattern(prefixUrl + "/" + name).call();
         RevCommit revCommit = git.commit().setMessage(comment).call();
         ObjectId id = revCommit.getId();
         log.info("comment successfully, comment id : {}", id);
